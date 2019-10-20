@@ -9,9 +9,17 @@ build:
 test:
 	cargo test
 	cargo clippy
+	cargo test --package healthscope
+	cargo clippy --package healthscope
 
 run:
 	RUST_LOG="rudr=debug" RUST_BACKTRACE=short cargo run
+
+healthscoperun:
+	RUST_LOG="healthscope=debug" RUST_BACKTRACE=short cargo run --package healthscope
+
+healthscopebuild:
+	docker build -t oamdev/healthscope:latest --build-arg PACKAGE_NAME=healthscope .
 
 GIT_VERSION = $(shell git describe --always --abbrev=7 --dirty)
 kind-e2e:
@@ -28,8 +36,8 @@ kind-e2e:
 
 docker-build-cx:
 	docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
-	docker build -t $(REPO)-arm64:$(TAG) --build-arg BUILDER_IMAGE=arm64v8/rust:1.37 --build-arg BASE_IMAGE=arm64v8/debian:stretch-slim .
-	docker build -t $(REPO)-amd64:$(TAG) --build-arg BUILDER_IMAGE=rust:1.37 --build-arg BASE_IMAGE=debian:stretch-slim .
+	docker build -t $(REPO)-arm64:$(TAG) --build-arg BUILDER_IMAGE=arm64v8/rust:1.38 --build-arg BASE_IMAGE=arm64v8/debian:stretch-slim .
+	docker build -t $(REPO)-amd64:$(TAG) --build-arg BUILDER_IMAGE=rust:1.38 --build-arg BASE_IMAGE=debian:stretch-slim .
 
 docker-publish: docker-build-cx
 	docker login -u hydraoss -p ${hydraoss_secret}
