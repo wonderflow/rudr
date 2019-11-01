@@ -27,6 +27,8 @@ You can describe existing applications as Open Application Model applications. S
 
 Open Application Model is just an application model that, thanks to Rudr, runs on Kubernetes. You can bundle your Open Application Model applications as Helm charts and deploy them using Helm.
 
+We have a doc about [how to use helm/kustomize to manage OAM](how-to/using_helm_kustomize_manage_oam.md).
+
 [Kompose](http://kompose.io/) is a tool for manipulating Kubernetes YAML documents. It is also compatible with Open Application Model/Rudr.
 
 ## How does OAM compare with CNAB?
